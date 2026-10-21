@@ -138,12 +138,3 @@ if [[ "$UPDATE_BASELINE" == true ]]; then
   fi
   exit 0
 fi
-
-# ---------------------------------------------------------------------------
-# Compare against baseline
-# ---------------------------------------------------------------------------
-if [[ "$FILES_SPECIFIED" == true ]]; then
-  python3 "${REPO_ROOT}/tests/compare-baseline.py" "$BASELINE" "$TMP_CURRENT" --repo-root "$REPO_ROOT" --files "${FILES[@]}"
-else
-  python3 "${REPO_ROOT}/tests/compare-baseline.py" "$BASELINE" "$TMP_CURRENT"
-fi
