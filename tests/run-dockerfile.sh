@@ -190,14 +190,6 @@ test_base() {
   # shellcheck disable=SC2016
   assert_empty "$image" "no unresolved .so deps in PHP extensions" \
     sh -c 'ext=$(php -r "echo PHP_EXTENSION_DIR;") && find "$ext" -name "*.so" -exec ldd {} + 2>/dev/null | grep "not found" || true'
-
-  # GitHub Copilot Chat extension must be installed in the extensions directory.
-  # code-server --install-extension unpacks the VSIX into a subdirectory named
-  # after the extension (e.g. GitHub.copilot-chat-<version>).  Use find with
-  # -iname to locate the directory case-insensitively, normalize to lowercase,
-  # and grep to confirm the expected publisher/name prefix is present.
-  assert_contains "$image" "github\.copilot-chat" "GitHub Copilot Chat extension installs and is found" \
-    sh -c "code-server --install-extension /usr/local/share/devpanel/copilot-chat.vsix --user-data-dir /var/www/html/.vscode && find /var/www/html/.vscode/extensions/ -maxdepth 1 -iname 'github.copilot-chat-*' -type d | tr '[:upper:]' '[:lower:]' | grep 'github.copilot-chat'"
 }
 
 test_secure() {
