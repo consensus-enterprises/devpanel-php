@@ -398,9 +398,7 @@ runs:
         # first element (or {} when empty/null), coerces any non-object value to
         # {}, and outputs compact JSON. If jq fails (truly malformed input),
         # fall back to '{}'.
-        BEFORE_SHAS="$(printf '%s' "${BEFORE_SHAS:-}" \
-          | jq -sc '((first // {}) | if type == "object" then . else {} end)' 2>/dev/null || echo '{}')"
-
+        BEFORE_SHAS={}
         # Determine whether a non-empty before_shas map was provided.
         # A non-empty map means per-platform version detection should be used.
         BEFORE_SHAS_COUNT="$(printf '%s' "${BEFORE_SHAS}" \
